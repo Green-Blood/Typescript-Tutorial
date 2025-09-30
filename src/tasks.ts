@@ -8,15 +8,29 @@ type Task = {
 };
 const tasks: Task[] = [];
 
-function createTask(event: SubmitEvent) {
+taskForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const taskDescription = formInput?.value;
   if (taskDescription) {
-    console.log(taskDescription);
+    const task: Task = {
+      description: taskDescription,
+      isCompleted: false,
+    };
+    addTask(task);
+    renderTask(task);
     formInput.value = "";
     return;
   }
   alert("Please enter a task description");
+});
+
+function addTask(task: Task): void {
+  tasks.push(task);
+  console.log(tasks);
 }
 
-taskForm?.addEventListener("submit", createTask);
+function renderTask(task: Task): void {
+  const taskElement = document.createElement("li");
+  taskElement.textContent = task.description;
+  taskListElement?.appendChild(taskElement);
+}
